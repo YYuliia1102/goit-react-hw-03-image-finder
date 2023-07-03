@@ -2,15 +2,28 @@ import React, { Component } from "react";
 import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
 import { getImages } from "services/getImages";
 import Button from "../Button/Button";
+import Loader from "../Loader/Loader";
+// import Modal from "./Modal/Modal";
+
 
 class ImageGallery extends Component {
     state = {
+        showModal: false,
         images: [],
         isLoading: false,
         searchText: "",
         page: 1,
         error: null,
     };
+
+    openModal = (image) => {
+        this.setState({ showModal: true, selectedImage: image });
+    };
+
+    closeModal = () => {
+        this.setState({ showModal: false, selectedImage: null });
+    };
+
 
     handleSearch = (searchText) => {
         this.setState({ searchText, images: [], page: 1 }, () => {
@@ -50,7 +63,7 @@ class ImageGallery extends Component {
 
         return (
             <>
-                {isLoading && <h1>Loading...</h1>}
+                {isLoading && <Loader />}
                 {error && <h1>Error: {error}</h1>}
                 <ul className="ImageGallery">
                     {images.map((image) => (

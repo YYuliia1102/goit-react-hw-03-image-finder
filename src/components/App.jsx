@@ -19,7 +19,6 @@ class App extends Component {
       <div>
         <Searchbar handleSearch={this.handleSearch} />
         <ImageGallery searchText={searchText} />
-
       </div>
     );
   }

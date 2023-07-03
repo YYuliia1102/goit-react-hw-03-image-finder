@@ -35,9 +35,11 @@ class LoadMoreBtn extends Component {
         }
 
         return (
-            <button type="button" disabled={disabled} onClick={this.props.onClick}>
-                {buttonText}
-            </button>
+            <div className="buttonContainer">
+                <button className="Button" type="button" disabled={disabled} onClick={this.props.onClick}>
+                    {buttonText}
+                </button>
+            </div>
         );
     }
 }
