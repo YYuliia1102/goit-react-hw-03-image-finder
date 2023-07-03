@@ -49,20 +49,36 @@ class ImageGallery extends Component {
         } catch (error) {
             this.setState({ error: error.message });
         } finally {
-            this.setState({ isLoading: false });
+            setTimeout(() => {
+                this.setState({ isLoading: false });
+            }, 1000);
         }
     };
 
-    handleLoadMore = () => {
-        this.fetchImages();
+    handleLoadMore = async () => {
+        this.setState({ isLoading: true, error: null });
+
+        try {
+            const { searchText, page } = this.state;
+            const images = await getImages(searchText, page);
+            this.setState((prevState) => ({
+                images: page === 1 ? images : [...prevState.images, ...images],
+                page: page + 1,
+                isLoading: false,
+            }));
+        } catch (error) {
+            this.setState({ error: error.message, isLoading: false });
+        }
     };
+
 
     render() {
         const { images, isLoading, error } = this.state;
+        const showLoader = isLoading && images.length > 0;
 
         return (
             <>
-                {isLoading && <Loader />}
+                {showLoader && <Loader />}
                 {error && <h1>Error: {error}</h1>}
                 <ul className="ImageGallery">
                     {images.map((image) => (
