@@ -1,10 +1,9 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
 import { getImages } from "services/getImages";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
-// import Modal from "./Modal/Modal";
-
 
 class ImageGallery extends Component {
     state = {
@@ -81,5 +80,9 @@ class ImageGallery extends Component {
         );
     }
 }
+
+ImageGallery.propTypes = {
+    searchText: PropTypes.string.isRequired,
+};
 
 export default ImageGallery;

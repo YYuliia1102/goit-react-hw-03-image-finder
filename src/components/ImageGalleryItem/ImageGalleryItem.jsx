@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import Modal from "../Modal/Modal";
 
 const ImageGalleryItem = ({ src, alt }) => {
@@ -22,6 +23,11 @@ const ImageGalleryItem = ({ src, alt }) => {
             )}
         </>
     );
+};
+
+ImageGalleryItem.propTypes = {
+    src: PropTypes.string.isRequired,
+    alt: PropTypes.string.isRequired,
 };
 
 export default ImageGalleryItem;

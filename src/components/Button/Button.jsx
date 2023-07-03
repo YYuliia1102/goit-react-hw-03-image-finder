@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class LoadMoreBtn extends Component {
     state = {
@@ -43,5 +44,10 @@ class LoadMoreBtn extends Component {
         );
     }
 }
+
+LoadMoreBtn.propTypes = {
+    isHidden: PropTypes.bool,
+    onClick: PropTypes.func.isRequired,
+};
 
 export default LoadMoreBtn;
