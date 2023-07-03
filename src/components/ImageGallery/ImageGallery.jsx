@@ -75,10 +75,11 @@ class ImageGallery extends Component {
     render() {
         const { images, isLoading, error } = this.state;
         const showLoader = isLoading && images.length > 0;
-
+        // if (showLoader) {
+        //     return <Loader />;
+        // }
         return (
             <>
-                {showLoader && <Loader />}
                 {error && <h1>Error: {error}</h1>}
                 <ul className="ImageGallery">
                     {images.map((image) => (
@@ -89,6 +90,8 @@ class ImageGallery extends Component {
                         />
                     ))}
                 </ul>
+                {showLoader && <Loader />}
+                {images.length > 0 && <ul />}
                 {images.length > 0 && !isLoading && (
                     <Button onClick={this.handleLoadMore} />
                 )}
