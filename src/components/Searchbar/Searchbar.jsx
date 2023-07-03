@@ -5,7 +5,6 @@ import searchIcon from '../../images/search.png';
 class Searchbar extends Component {
     state = {
         value: '',
-        error: null,
     }
 
     handleChange = (e) => {
