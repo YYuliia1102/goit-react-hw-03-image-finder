@@ -11,7 +11,7 @@ class App extends Component {
     page: 1,
     query: "",
     isLoading: false,
-    loadMore: true,
+    loadMore: false,
     error: null,
   };
 
@@ -32,10 +32,12 @@ class App extends Component {
     try {
       const { images, totalHits } = await getImages(query, page);
       const loadMore = page < Math.ceil(totalHits / 12);
+      const showLoadMore = images.length > 0;
 
       this.setState((prevState) => ({
         images: [...prevState.images, ...images],
         loadMore,
+        showLoadMore,
       }));
     } catch (error) {
       this.setState({ error: error.message });
