@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import Searchbar from "./Searchbar/Searchbar";
-import { getImages } from "../services/getImages.js"; // Припустимо, що ваш файл з функцією getImages називається api.js
+import { getImages } from "../services/getImages.js";
 import Button from "./Button/Button";
 import Loader from "./Loader/Loader";
+import Modal from "./Modal/Modal";
 
 class App extends Component {
   state = {
@@ -13,6 +14,7 @@ class App extends Component {
     isLoading: false,
     loadMore: false,
     error: null,
+    isOpen: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -46,21 +48,29 @@ class App extends Component {
     }
   };
 
+  openModal = () => {
+    this.setState({ isOpen: true });
+  };
+
+  closeModal = () => {
+    this.setState({ isOpen: false });
+  };
 
   handleLoadMore = () => {
     this.setState((prevState) => ({ page: prevState.page + 1 }));
   };
 
   render() {
-    const { images, isLoading, loadMore, error } = this.state;
+    const { images, isLoading, loadMore, error, isOpen } = this.state;
 
     return (
       <div>
         {error && <h1>Error: {error}</h1>}
         <Searchbar handleSearch={this.handleSearch} />
-        <ImageGallery images={images} />
+        <ImageGallery images={images} openModal={this.openModal} />
         {isLoading && <Loader />}
         {loadMore && <Button onClick={this.handleLoadMore} />}
+        {isOpen && <Modal onClose={this.closeModal} />}
       </div>
     );
   }
