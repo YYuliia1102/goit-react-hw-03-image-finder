@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import Searchbar from "./Searchbar/Searchbar";
-import { getImages } from "../services/getImages.js";
+import { getImages } from "../services/getImages.js"; // Припустимо, що ваш файл з функцією getImages називається api.js
 import Button from "./Button/Button";
 import Loader from "./Loader/Loader";
 import Modal from "./Modal/Modal";
@@ -14,7 +14,17 @@ class App extends Component {
     isLoading: false,
     loadMore: false,
     error: null,
-    isOpen: false,
+    showModal: false,
+    selectedImage: null,
+  };
+
+
+  openModal = (image) => {
+    this.setState({ showModal: true, selectedImage: image });
+  };
+
+  closeModal = () => {
+    this.setState({ showModal: false, selectedImage: null });
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -48,20 +58,12 @@ class App extends Component {
     }
   };
 
-  openModal = () => {
-    this.setState({ isOpen: true });
-  };
-
-  closeModal = () => {
-    this.setState({ isOpen: false });
-  };
-
   handleLoadMore = () => {
     this.setState((prevState) => ({ page: prevState.page + 1 }));
   };
 
   render() {
-    const { images, isLoading, loadMore, error, isOpen } = this.state;
+    const { images, isLoading, loadMore, error, showModal, selectedImage } = this.state;
 
     return (
       <div>
@@ -70,7 +72,9 @@ class App extends Component {
         <ImageGallery images={images} openModal={this.openModal} />
         {isLoading && <Loader />}
         {loadMore && <Button onClick={this.handleLoadMore} />}
-        {isOpen && <Modal onClose={this.closeModal} />}
+        {showModal && (
+          <Modal imageUrl={selectedImage} onClose={this.closeModal} />
+        )}
       </div>
     );
   }
